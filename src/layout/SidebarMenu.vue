@@ -37,7 +37,7 @@ import AppIcon from '../components/AppIcon.vue'
 
 defineOptions({ name: 'SidebarMenu' })
 
-defineProps({
+const props = defineProps({
   menus: { type: Array, default: () => [] },
   activePath: { type: String, default: '' },
   depth: { type: Number, default: 0 }
@@ -48,9 +48,9 @@ const collapsed = ref(new Set())
 
 const hasChildren = (menu) => Array.isArray(menu.children) && menu.children.length > 0
 const isOpen = (menu) => !collapsed.value.has(menu.id)
-const isActive = (menu) => menu.path === activePath
+const isActive = (menu) => menu.path === props.activePath
 const hasActiveChild = (menu) =>
-  hasChildren(menu) && menu.children.some((child) => child.path === activePath || hasActiveChild(child))
+  hasChildren(menu) && menu.children.some((child) => child.path === props.activePath || hasActiveChild(child))
 
 function handleClick(menu) {
   if (hasChildren(menu)) {
